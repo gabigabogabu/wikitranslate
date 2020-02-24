@@ -1,0 +1,42 @@
+<ng-form [formGroup]="translateFormGroup">
+  <mat-form-field>
+    <mat-label>Source Language</mat-label>
+    <mat-select
+        formControlName="sourceLang">
+      <mat-option
+          *ngFor="let lang of availableSourceLangs"
+          [value]="lang">
+        {{lang.name}} - {{lang.localName}}
+      </mat-option>
+    </mat-select>
+    <mat-error>Set a language to translate from</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+        matInput
+        placeholder="Term"
+        formControlName="query"
+        [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let result of autocompleteOptions" [value]="result.title" (onSelectionChange)="autocompleteOptionSelected(result)">
+        {{result.title}}
+<!--        <mat-card>-->
+<!--          <mat-card-title>{{result.title}}</mat-card-title>-->
+<!--          <mat-card-content>{{result.snippet}}</mat-card-content>-->
+<!--        </mat-card>-->
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="availableTargetLangs && availableTargetLangs.length > 0">
+    <mat-label>Target Language</mat-label>
+    <mat-select formControlName="targetLang">
+      <mat-option *ngFor="let lang of availableTargetLangs" [value]="lang" (onSelectionChange)="onTargetLangSelected(lang)">
+        {{lang.name}} - {{lang.localName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div *ngIf="translation">{{translation}}</div>
+</ng-form>
