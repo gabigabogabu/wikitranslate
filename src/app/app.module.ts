@@ -8,11 +8,13 @@ import { TranslateComponent } from './translate/translate.component';
 import {HttpClientModule} from "@angular/common/http";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatCardModule} from "@angular/material/card";
+import {SafeUrlPipe} from "./translate/safeUrl.pipe";
 
 @NgModule({
   declarations: [
     AppComponent,
     TranslateComponent,
+    SafeUrlPipe,
   ],
   imports: [
     BrowserModule,

@@ -24,9 +24,11 @@ export class WikipediaService {
       }).subscribe(response => {
         let langs = this.getLangsFromResponse(response);
         observer.next(langs);
+        observer.complete();
       }, error => {
-        console.log("Couldn't get all available languages:", error);
-        observer.error(error)
+        console.log("Couldn't get all available languages: ", error);
+        observer.error(error);
+        observer.complete();
       });
     });
   }
@@ -49,7 +51,7 @@ export class WikipediaService {
     return elem['site'].find(site => site.url.includes('wikipedia.org'));
   }
 
-  private static getElementsFromObject(obj: Object) {
+  private static getElementsFromObject(obj: Object): any[] {
     let elements = [];
     for (let key in obj) {
       elements.push(obj[key]);
@@ -128,6 +130,7 @@ export class WikipediaService {
         'prop': 'text',
         'page': title,
         'origin': '*',
+        'format': 'json'
       }
     });
   }

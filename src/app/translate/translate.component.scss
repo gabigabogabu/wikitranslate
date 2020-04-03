@@ -1,0 +1,30 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: auto;
+  &.formChild {
+    padding: 1em;
+  }
+}
+
+.sourceLang {
+  order: 0;
+}
+
+.query {
+  order: 1;
+}
+
+.targetLang {
+  order: 2;
+}
+
+.translation {
+  order: 3;
+}
+
+.translationPreview {
+  border: none;
+  order: 4;
+}
