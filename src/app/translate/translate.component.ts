@@ -11,11 +11,11 @@ import {throttleTime} from "rxjs/operators";
   styleUrls: ['./translate.component.scss']
 })
 export class TranslateComponent implements OnInit {
-  private availableSourceLangs: WikiLanguage[];
-  private translateFormGroup: FormGroup;
-  private autocompleteOptions: any[];
-  private availableTargetLangs: WikiLanguage[];
-  private translation: WikiLanguage;
+  availableSourceLangs: WikiLanguage[];
+  translateFormGroup: FormGroup;
+  autocompleteOptions: any[];
+  availableTargetLangs: WikiLanguage[];
+  translation: WikiLanguage;
 
   constructor(
     private wikipediaService: WikipediaService,

@@ -29,7 +29,8 @@
     </mat-autocomplete>
   </mat-form-field>
 
-  <mat-form-field *ngIf="availableTargetLangs && availableTargetLangs.length > 0" class="targetLang formChild">
+<!--  <mat-form-field *ngIf="availableTargetLangs && availableTargetLangs.length > 0" class="targetLang formChild">-->
+  <mat-form-field class="targetLang formChild">
     <mat-label>Target Language</mat-label>
     <mat-select formControlName="targetLang">
       <mat-option *ngFor="let lang of availableTargetLangs" [value]="lang" (onSelectionChange)="onTargetLangSelected(lang)">
@@ -37,13 +38,14 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-
-  <iframe
-      class="translationPreview"
-      [title]="translation.title"
-      [src]="translation.url | safe"
-      *ngIf="translation"
-  >
-    {{translation.title}}
-  </iframe>
 </ng-form>
+
+<iframe
+  class="translationPreview"
+  [title]="translation.title"
+  [src]="translation.url | safe"
+  *ngIf="translation"
+  onload="this.width=window.innerWidth;"
+>
+  {{translation.title}}
+</iframe>
