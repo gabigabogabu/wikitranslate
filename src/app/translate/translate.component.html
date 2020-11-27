@@ -12,7 +12,7 @@
     <mat-error>Set a language to translate from</mat-error>
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field class="query formChild">
     <input
         matInput
         placeholder="💬 Enter text"
@@ -35,7 +35,6 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-
   <div *ngIf="result" class="result">
     <h1><a [href]="result.url">🔗{{result.title}}</a></h1>
     <iframe
@@ -43,3 +42,13 @@
       [src]="sanitizer.bypassSecurityTrustResourceUrl(result.url)" />
   </div>
 </ng-form>
+
+<iframe
+  class="translationPreview"
+  [title]="translation.title"
+  [src]="translation.url | safe"
+  *ngIf="translation"
+  onload="this.width=window.innerWidth;"
+>
+  {{translation.title}}
+</iframe>

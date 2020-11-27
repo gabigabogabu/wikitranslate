@@ -56,11 +56,11 @@ export class TranslateComponent implements OnInit {
         500, //ms
         asyncScheduler,
         {
-          leading: false,
+          leading: true,
           trailing: true
         })
     ).subscribe(query => {
-      console.log('searching:', query);
+      console.log('searching for: ', query);
       this.translateFormGroup.controls.sourceLang.markAsTouched();
       if (this.translateFormGroup.controls.sourceLang.valid) {
         let fromLang = this.translateFormGroup.controls.sourceLang.value;
