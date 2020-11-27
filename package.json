@@ -8,7 +8,7 @@
     "test": "jest",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng deploy --base-href=/wikitranslate/ --no-silent --name gschulze --email gaschu95@gmail.com"
+    "deploy": "ng deploy --base-href=/wikitranslate/"
   },
   "private": true,
   "dependencies": {
