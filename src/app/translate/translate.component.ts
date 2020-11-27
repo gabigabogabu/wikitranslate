@@ -62,7 +62,7 @@ export class TranslateComponent implements OnInit {
           trailing: true
         })
     ).subscribe(query => {
-      console.log('searching for: ', query);
+      // console.log('searching for: ', query);
       this.translateFormGroup.controls.sourceLang.markAsTouched();
       if (this.translateFormGroup.controls.sourceLang.valid) {
         let fromLang = this.translateFormGroup.controls.sourceLang.value;
@@ -86,7 +86,7 @@ export class TranslateComponent implements OnInit {
         this.wikipediaService.getLangLinks(this.translateFormGroup.controls.sourceLang.value.url, this.translateFormGroup.controls.query.value).subscribe(result => {
           this.availableTranslations = result;
           this.availableTargetLangs = this.availableLangs.filter(lang => this.availableTranslations.map(value => value.code).includes(lang.code));
-          console.log("availableTranslations: ", this.availableTranslations);
+          // console.log("availableTranslations: ", this.availableTranslations);
         }, error => {
           console.error(error);
         });
@@ -100,9 +100,6 @@ export class TranslateComponent implements OnInit {
           // console.log(lang, this.translateFormGroup.controls.targetLang.value);
           return lang.code === this.translateFormGroup.controls.targetLang.value.code;
         });
-        // this.wikipediaService.getArticle(this.result.code, this.result.title).subscribe(article => {
-        //   console.log(article)
-        // });
       }
     });
   }

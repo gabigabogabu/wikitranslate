@@ -6,6 +6,8 @@ import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatSelectModule} from "@angular/material/select";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [],
@@ -18,6 +20,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatCardModule,
   ],
   exports: [
     CommonModule,
@@ -28,6 +32,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatCardModule,
   ]
 })
 export class MaterialModule { }
