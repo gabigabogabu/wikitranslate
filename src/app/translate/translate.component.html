@@ -39,16 +39,6 @@
     <h1><a [href]="result.url">🔗{{result.title}}</a></h1>
     <iframe
       [title]="result.title"
-      [src]="sanitizer.bypassSecurityTrustResourceUrl(result.url)" />
+      [src]="sanitizer.bypassSecurityTrustResourceUrl(result.url)" ></iframe>
   </div>
 </ng-form>
-
-<iframe
-  class="translationPreview"
-  [title]="translation.title"
-  [src]="translation.url | safe"
-  *ngIf="translation"
-  onload="this.width=window.innerWidth;"
->
-  {{translation.title}}
-</iframe>
