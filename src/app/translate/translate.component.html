@@ -1,10 +1,10 @@
 <ng-form [formGroup]="translateFormGroup">
   <mat-form-field>
-    <mat-label>Source Language</mat-label>
+    <mat-label>🔎 Translate from</mat-label>
     <mat-select
         formControlName="sourceLang">
       <mat-option
-          *ngFor="let lang of availableSourceLangs"
+          *ngFor="let lang of availableLangs"
           [value]="lang">
         {{lang.name}} - {{lang.localName}}
       </mat-option>
@@ -15,28 +15,31 @@
   <mat-form-field>
     <input
         matInput
-        placeholder="Term"
+        placeholder="💬 Enter text"
         formControlName="query"
         [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let result of autocompleteOptions" [value]="result.title" (onSelectionChange)="autocompleteOptionSelected(result)">
+      <mat-option *ngFor="let result of autocompleteOptions"
+                  [value]="result.title">
         {{result.title}}
-<!--        <mat-card>-->
-<!--          <mat-card-title>{{result.title}}</mat-card-title>-->
-<!--          <mat-card-content>{{result.snippet}}</mat-card-content>-->
-<!--        </mat-card>-->
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
 
-  <mat-form-field *ngIf="availableTargetLangs && availableTargetLangs.length > 0">
-    <mat-label>Target Language</mat-label>
-    <mat-select formControlName="targetLang">
-      <mat-option *ngFor="let lang of availableTargetLangs" [value]="lang" (onSelectionChange)="onTargetLangSelected(lang)">
+  <mat-form-field>
+    <mat-label>🌐 Translate into</mat-label>
+    <mat-select formControlName="targetLang" [disabled]="!availableTargetLangs">
+      <mat-option *ngFor="let lang of availableTargetLangs"
+                  [value]="lang">
         {{lang.name}} - {{lang.localName}}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <div *ngIf="translation">{{translation}}</div>
+  <div *ngIf="result" class="result">
+    <h1><a [href]="result.url">🔗{{result.title}}</a></h1>
+    <iframe
+      [title]="result.title"
+      [src]="sanitizer.bypassSecurityTrustResourceUrl(result.url)" />
+  </div>
 </ng-form>

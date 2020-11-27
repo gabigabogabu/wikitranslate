@@ -1,0 +1,33 @@
+.mat-form-field {
+  display: flex;
+  max-width: 500px;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  margin: 1.25em 1.25em 0 1.25em;
+  width: 100%;
+}
+
+* {
+  font-family: monospace;
+  font-size: 1.1em;
+}
+
+iframe {
+  width: 100%;
+  border-width: 0;
+  height: 100%;
+}
+
+.result {
+  height: 100%;
+}
+
+html, body {
+  height: 100%;
+}
+
+h1 {
+  text-align: center;
+}
+

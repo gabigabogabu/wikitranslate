@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import {WikipediaService} from "./wikipedia.service";
 import {WikiLanguage} from "./wiki-language";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {asyncScheduler, from} from "rxjs";
-import {takeLast, throttleTime} from "rxjs/operators";
-import {MatOptionSelectionChange} from "@angular/material/core";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {asyncScheduler} from "rxjs";
+import {throttleTime} from "rxjs/operators";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-translate',
@@ -12,25 +12,45 @@ import {MatOptionSelectionChange} from "@angular/material/core";
   styleUrls: ['./translate.component.scss']
 })
 export class TranslateComponent implements OnInit {
-  private availableSourceLangs: WikiLanguage[];
+  private availableLangs: WikiLanguage[];
   private translateFormGroup: FormGroup;
   private autocompleteOptions: any[];
   private availableTargetLangs: WikiLanguage[];
-  private translation: string;
+  private availableTranslations: WikiLanguage[];
+  private result: WikiLanguage;
 
   constructor(
     private wikipediaService: WikipediaService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private sanitizer: DomSanitizer
   ) {
     this.initForm();
   }
 
-  private initForm() {
-    this.createFormGroup();
-    this.initAutocomplete();
+  ngOnInit() {
+    this.wikipediaService.getAllAvailableLangs().subscribe(langs => {
+      this.availableLangs = langs;
+      this.availableTranslations = langs;
+    }, error => {
+      console.error(error);
+    });
   }
 
-  private initAutocomplete() {
+  private initForm() {
+    this.createFormGroup();
+    this.initQueryAutocomplete();
+    this.initAutoTranslate();
+  }
+
+  private createFormGroup() {
+    this.translateFormGroup = this.fb.group({
+      sourceLang: [null, Validators.required],
+      targetLang: [null, Validators.required],
+      query: ['', Validators.required]
+    });
+  }
+
+  private initQueryAutocomplete() {
     this.translateFormGroup.controls.query.valueChanges.pipe(
       throttleTime(
         500, //ms
@@ -46,45 +66,42 @@ export class TranslateComponent implements OnInit {
         let fromLang = this.translateFormGroup.controls.sourceLang.value;
         this.wikipediaService.search(fromLang.url, query).subscribe(response => {
           this.autocompleteOptions = response;
-          console.log(this.autocompleteOptions);
+          // console.log(this.autocompleteOptions);
         }, error => {
-          console.log(error);
+          console.error(error);
         });
       }
     });
   }
 
-  private createFormGroup() {
-    this.translateFormGroup = this.fb.group({
-      sourceLang: ['', Validators.required],
-      targetLang: ['', Validators.required],
-      query: ['', Validators.required]
-    });
-  }
+  private initAutoTranslate() {
+    this.translateFormGroup.valueChanges.subscribe(formValues => {
+      console.log(formValues);
+      // get traget langs
+      if (this.translateFormGroup.controls.sourceLang.valid &&
+        this.translateFormGroup.controls.query.valid
+      ) {
+        this.wikipediaService.getLangLinks(this.translateFormGroup.controls.sourceLang.value.url, this.translateFormGroup.controls.query.value).subscribe(result => {
+          this.availableTranslations = result;
+          this.availableTargetLangs = this.availableLangs.filter(lang => this.availableTranslations.map(value => value.code).includes(lang.code));
+          console.log("availableTranslations: ", this.availableTranslations);
+        }, error => {
+          console.error(error);
+        });
+      }
 
-  ngOnInit() {
-    this.wikipediaService.getAllAvailableLangs().subscribe(langs => {
-      this.availableSourceLangs = langs;
-    }, error => {
-      console.log(error);
-    });
-  }
-
-  autocompleteOptionSelected(wikiSearchResult) {
-    console.log(wikiSearchResult);
-    this.wikipediaService.getLangLinks(this.translateFormGroup.controls.sourceLang.value.url, wikiSearchResult.title).subscribe(result => {
-      this.availableTargetLangs = result;
-      console.log(this.availableTargetLangs);
-    }, error => {
-      console.log(error);
-    })
-  }
-
-  onTargetLangSelected(langLink: WikiLanguage) {
-    console.log(langLink);
-    this.wikipediaService.getArticle(langLink.code, langLink.title).subscribe(response => {
-      this.translation = langLink.title;
-      console.log(this.translation);
+      if (this.translateFormGroup.controls.targetLang.valid &&
+        this.translateFormGroup.controls.sourceLang.valid &&
+        this.translateFormGroup.controls.query.valid
+      ) {
+        this.result = this.availableTranslations.find(lang => {
+          // console.log(lang, this.translateFormGroup.controls.targetLang.value);
+          return lang.code === this.translateFormGroup.controls.targetLang.value.code;
+        });
+        // this.wikipediaService.getArticle(this.result.code, this.result.title).subscribe(article => {
+        //   console.log(article)
+        // });
+      }
     });
   }
 }
