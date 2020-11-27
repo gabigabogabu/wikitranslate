@@ -18,6 +18,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/labeles@v2
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
@@ -28,6 +31,3 @@ jobs:
       env:
         CI: true
     - run: npm run deploy
-      uses: actions/labeles@v2
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
