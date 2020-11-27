@@ -22,7 +22,7 @@ export class WikipediaService {
           'origin': '*'
         }
       }).subscribe(response => {
-        let langs = this.getLangsFromResponse(response);
+        let langs = WikipediaService.getLangsFromResponse(response);
         observer.next(langs);
         observer.complete();
       }, error => {
@@ -33,7 +33,7 @@ export class WikipediaService {
     });
   }
 
-  private getLangsFromResponse(response: Object) {
+  private static getLangsFromResponse(response: Object) {
     let elements = WikipediaService.getElementsFromObject(response['sitematrix']);
     return elements.map(elem => WikipediaService.mapLang(elem)).filter(lang => lang.url);
   }
