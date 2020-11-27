@@ -12,19 +12,21 @@ import {DomSanitizer} from "@angular/platform-browser";
   styleUrls: ['./translate.component.scss']
 })
 export class TranslateComponent implements OnInit {
-  private availableLangs: WikiLanguage[];
-  private translateFormGroup: FormGroup;
-  private autocompleteOptions: any[];
-  private availableTargetLangs: WikiLanguage[];
-  private availableTranslations: WikiLanguage[];
-  private result: WikiLanguage;
+  availableLangs: WikiLanguage[];
+  translateFormGroup: FormGroup;
+  autocompleteOptions: any[];
+  availableTargetLangs: WikiLanguage[];
+  availableTranslations: WikiLanguage[];
+  result: WikiLanguage;
+  sanitizer: DomSanitizer;
 
   constructor(
     private wikipediaService: WikipediaService,
     private fb: FormBuilder,
-    private sanitizer: DomSanitizer
+    sanitizer: DomSanitizer
   ) {
     this.initForm();
+    this.sanitizer = sanitizer;
   }
 
   ngOnInit() {
