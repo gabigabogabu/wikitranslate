@@ -25,7 +25,6 @@ jobs:
     - run: npm i
     - run: npm run build
     - run: npm test
-    - run: npm lint
-    - run: npm deploy
+    - run: npm run deploy
       env:
         CI: true
