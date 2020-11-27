@@ -1,30 +1,32 @@
-.formContainer {
+.mat-form-field {
   display: flex;
-  flex-direction: column;
-  width: 80%;
-  margin: auto;
-  &.formChild {
-    padding: 1em;
-  }
+  max-width: 500px;
 }
 
-.sourceLang {
-  order: 0;
+::ng-deep .mat-form-field-wrapper {
+  margin: 1.25em 1.25em 0 1.25em;
+  width: 100%;
 }
 
-.query {
-  order: 1;
+* {
+  font-family: monospace;
+  font-size: 1.1em;
 }
 
-.targetLang {
-  order: 2;
+iframe {
+  width: 100%;
+  border-width: 0;
+  height: 100%;
 }
 
-.translation {
-  order: 3;
+.result {
+  height: 100%;
 }
 
-.translationPreview {
-  border: none;
-  order: 4;
+html, body {
+  height: 100%;
+}
+
+h1 {
+  text-align: center;
 }
