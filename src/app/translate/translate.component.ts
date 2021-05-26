@@ -1,12 +1,12 @@
-import { Component, OnInit } from "@angular/core";
-import {WikipediaService} from "./wikipedia.service";
-import {WikiLanguage} from "./wiki-language";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {asyncScheduler} from "rxjs";
-import {throttleTime} from "rxjs/operators";
-import {DomSanitizer} from "@angular/platform-browser";
+import { Component, OnInit } from '@angular/core';
+import { WikipediaService } from './wikipedia.service';
+import { WikiLanguage } from './wiki-language';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { asyncScheduler } from 'rxjs';
+import { throttleTime } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
 
-@Component({
+@Component ({
   selector: 'app-translate',
   templateUrl: './translate.component.html',
   styleUrls: ['./translate.component.scss']

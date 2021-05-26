@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { TranslateComponent } from './translate.component';
-import {MaterialModule} from "../material.module";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { MaterialModule } from "../material.module";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe('TranslateComponent', () => {
   let component: TranslateComponent;
